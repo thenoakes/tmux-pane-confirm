@@ -4,6 +4,15 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+if [ -z "${WEZTERM_PANE:-}" ]; then
+  ENV_LINE="$(tmux show-environment -g WEZTERM_PANE 2>/dev/null || true)"
+  case "$ENV_LINE" in
+    WEZTERM_PANE=*)
+      WEZTERM_PANE="${ENV_LINE#WEZTERM_PANE=}"
+      ;;
+  esac
+fi
+
 if [ -n "${WEZTERM_PANE:-}" ]; then
   if "$SCRIPT_DIR/wezterm-confirm.sh"; then
     exit 0

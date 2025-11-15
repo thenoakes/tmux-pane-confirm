@@ -69,4 +69,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
 end)
 ```
 
+To allow the tmux server to see WezTerm's environment variables, the plugin appends `WEZTERM_PANE` to tmux's `update-environment` option. Reload tmux (or restart your tmux server) after installing so the server copies the variable from WezTerm; otherwise the plugin falls back to tmux's popup UI.
+
 The plugin automatically falls back to the tmux popup when WezTerm is unavailable.
