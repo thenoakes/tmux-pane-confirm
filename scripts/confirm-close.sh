@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Popup confirmation dialog for killing the pane
-tmux display-popup -E '
+tmux display-popup '
   echo "";
   echo "   Close this pane?";
   echo "";
