@@ -10,12 +10,15 @@ if [ -z "$TMUX_TARGET" ]; then
   exit 1
 fi
 
-PAYLOAD=$(cat <<'PAYLOAD_JSON'
+PAYLOAD=$(cat <<PAYLOAD_JSON
 {"pane_id":"$TMUX_TARGET"}
 PAYLOAD_JSON
 )
 ENCODED=$(printf '%s' "$PAYLOAD" | base64 | tr -d '\n')
 
-OSC_CMD=$(printf '\033]1337;SetUserVar=%s=%s\007' 'tmux_pane_confirm' "$ENCODED")
+CLIENT_TTY="$(tmux display-message -p -t "$TMUX_TARGET" '#{client_tty}' 2>/dev/null || true)"
+if [ -z "$CLIENT_TTY" ] || [ ! -w "$CLIENT_TTY" ]; then
+  exit 1
+fi
 
-tmux display-message -p -t "$TMUX_TARGET" "$OSC_CMD" >/dev/null 2>&1
+printf '\033]1337;SetUserVar=%s=%s\007' 'tmux_pane_confirm' "$ENCODED" >"$CLIENT_TTY"
