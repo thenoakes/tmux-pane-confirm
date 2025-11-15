@@ -15,6 +15,7 @@ PAYLOAD=$(cat <<EOF
 EOF
 )
 ENCODED=$(printf '%s' "$PAYLOAD" | base64 | tr -d '\n')
+OSC_COMMAND=$(printf ']1337;SetUserVar=%s=%s\007' "tmux_pane_confirm" "$ENCODED")
 
-# Notify wezterm via OSC user var so it can render a native prompt
-printf '\033]1337;SetUserVar=%s=%s\007' "tmux_pane_confirm" "$ENCODED"
+# Wrap OSC sequence so tmux forwards it to the terminal (WezTerm)
+printf '\033Ptmux;\033%s\033\\' "$OSC_COMMAND"
