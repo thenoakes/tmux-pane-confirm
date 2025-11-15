@@ -10,12 +10,12 @@ if [ -z "$TMUX_TARGET" ]; then
   exit 1
 fi
 
-PAYLOAD=$(cat <<EOF
+PAYLOAD=$(cat <<'PAYLOAD_JSON'
 {"pane_id":"$TMUX_TARGET"}
-EOF
+PAYLOAD_JSON
 )
 ENCODED=$(printf '%s' "$PAYLOAD" | base64 | tr -d '\n')
-OSC_COMMAND=$(printf ']1337;SetUserVar=%s=%s\007' "tmux_pane_confirm" "$ENCODED")
 
-# Wrap OSC sequence so tmux forwards it to the terminal (WezTerm)
-printf '\033Ptmux;\033%s\033\\' "$OSC_COMMAND"
+OSC_CMD=$(printf '\033]1337;SetUserVar=%s=%s\007' 'tmux_pane_confirm' "$ENCODED")
+
+tmux display-message -p -t "$TMUX_TARGET" "$OSC_CMD" >/dev/null 2>&1
