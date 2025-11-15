@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 
-# Popup confirmation dialog for killing the pane
-tmux display-popup '
-  echo "";
-  echo "   Close this pane?";
-  echo "";
-  echo "   [y] Yes     [n] No";
-  echo "";
-  read -n 1 key;
-  if [ "$key" = "y" ] || [ "$key" = "Y" ]; then
-    tmux kill-pane
-  fi
-' -w 40% -h 20%
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Show popup with confirmation UI script
+tmux display-popup -w 40% -h 20% -E "$SCRIPT_DIR/popup-confirm.sh"
