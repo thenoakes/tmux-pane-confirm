@@ -24,22 +24,16 @@ Press:
 prefix + x
 ```
 
-You will see a popup asking:
-
-```
-Close this pane?
-
-[y] Yes     [n] No
-```
+You will see a tmux overlay menu asking if you want to close the pane. Click on **Yes** or **No**, or press `y`/`Enter` for **Yes** and `n`/`Esc` for **No**.
 
 ## Requirements
 
 - tmux 3.2 or later (popup support)
 - TPM if installing as a plugin
 
-## Optional: Native WezTerm UI
+## Optional: Native WezTerm UI (Experimental)
 
-When tmux is running inside [WezTerm](https://wezfurlong.org/wezterm/), the plugin can request a richer confirmation dialog that supports mouse/touch input. Add this snippet to your `wezterm.lua`:
+When tmux is running inside [WezTerm](https://wezfurlong.org/wezterm/), the plugin can emit a signal that WezTerm listens for to display its own confirmation dialog. This path is currently disabled by default until WezTerm exposes a richer modal popup API. To experiment with it, export `TMUX_PANE_CONFIRM_USE_WEZTERM=1` before starting tmux (or set the variable inside tmux), then add this snippet to your `wezterm.lua`:
 
 ```lua
 local wezterm = require 'wezterm'
@@ -69,6 +63,6 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
 end)
 ```
 
-To allow the tmux server to see WezTerm's environment variables, the plugin appends `WEZTERM_PANE` to tmux's `update-environment` option. Reload tmux (or restart your tmux server) after installing so the server copies the variable from WezTerm; otherwise the plugin falls back to tmux's popup UI.
+To allow the tmux server to see WezTerm's environment variables, the plugin appends `WEZTERM_PANE` to tmux's `update-environment` option. Reload tmux (or restart your tmux server) after installing so the server copies the variable from WezTerm; otherwise the plugin falls back to the tmux overlay menu.
 
-The plugin automatically falls back to the tmux popup when WezTerm is unavailable.
+The mouse-friendly tmux menu is always available, so you can safely leave the WezTerm integration disabled until a native popup API exists upstream.

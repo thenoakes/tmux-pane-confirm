@@ -1,27 +1,14 @@
 #!/usr/bin/env bash
+
 set -euo pipefail
 
-# Clear screen and show prompt inside popup
-cat <<'PROMPT'
-
-   Close this pane?
-
-   [y] Yes     [n] No
-
-PROMPT
-
-# Read a single keypress without echo
-while IFS= read -rsn1 key; do
-  case "$key" in
-    y|Y)
-      tmux kill-pane
-      exit 0
-      ;;
-    n|N|$'\e'|q|Q)
-      exit 0
-      ;;
-    *)
-      # ignore other keys
-      ;;
-  esac
-done
+tmux display-menu \
+  -T "#[align=centre]Close this pane?" \
+  -x P \
+  -y P \
+  "" "" "" \
+  "y" "Yes (Enter / Click)" "kill-pane" \
+  "Enter" "Yes (Enter / Click)" "kill-pane" \
+  "" "" "" \
+  "n" "No (Esc / Click)" "" \
+  "Escape" "No (Esc / Click)" ""
