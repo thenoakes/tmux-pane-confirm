@@ -2,11 +2,6 @@
 
 set -euo pipefail
 
-# Ensure wezterm CLI is available before attempting to trigger UI
-if ! command -v wezterm >/dev/null 2>&1; then
-  exit 1
-fi
-
 TMUX_TARGET="${TMUX_PANE:-}"
 if [ -z "$TMUX_TARGET" ]; then
   exit 1
