@@ -4,8 +4,8 @@ set -euo pipefail
 
 tmux display-menu \
   -T "#[align=centre]Close this pane?" \
-  -x "#{pane_left}+#{pane_width}/2" \
-  -y "#{pane_top}+3" \
+  -x P \
+  -y 1 \
   "" "" "" \
   "y" "Yes (Enter / Click)" "kill-pane" \
   "Enter" "Yes (Enter / Click)" "kill-pane" \
