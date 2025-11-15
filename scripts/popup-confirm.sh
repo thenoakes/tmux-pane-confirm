@@ -4,7 +4,7 @@ set -euo pipefail
 
 tmux display-menu \
   -T "#[align=centre]Close this pane?" \
-  -x P \
+  -x C \
   -y 3 \
   "" "" "" \
   "y" "Yes (Enter / Click)" "kill-pane" \
