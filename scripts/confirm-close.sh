@@ -14,9 +14,7 @@ if [ -z "${WEZTERM_PANE:-}" ]; then
 fi
 
 if [ -n "${WEZTERM_PANE:-}" ]; then
-  if "$SCRIPT_DIR/wezterm-confirm.sh"; then
-    exit 0
-  fi
+  "$SCRIPT_DIR/wezterm-confirm.sh" && exit 0
 fi
 
 # Fallback to tmux's popup UI
