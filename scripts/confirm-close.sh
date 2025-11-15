@@ -4,10 +4,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-WEZTERM_PANE_ID="${WEZTERM_PANE:-}"
-
-# Prefer WezTerm-native UX when possible
-if [ -n "$WEZTERM_PANE_ID" ]; then
+if [ -n "${WEZTERM_PANE:-}" ]; then
   if "$SCRIPT_DIR/wezterm-confirm.sh"; then
     exit 0
   fi
