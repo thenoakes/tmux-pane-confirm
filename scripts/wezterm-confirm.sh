@@ -12,7 +12,10 @@ if [ -z "$TMUX_TARGET" ]; then
   exit 1
 fi
 
-PAYLOAD=$(printf '{"pane_id":"%s"}' "$TMUX_TARGET")
+PAYLOAD=$(cat <<EOF
+{"pane_id":"$TMUX_TARGET"}
+EOF
+)
 ENCODED=$(printf '%s' "$PAYLOAD" | base64 | tr -d '\n')
 
 # Notify wezterm via OSC user var so it can render a native prompt
