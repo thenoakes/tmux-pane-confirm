@@ -1,6 +1,12 @@
-# Unbind tmux's default kill-pane keybinding
-unbind -n x
-unbind x
+#!/usr/bin/env bash
 
-# Bind x to our popup confirmation script using TPM's plugin dir
-bind-key x run-shell "#{plugin_dir}/scripts/confirm-close.sh"
+set -euo pipefail
+
+PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Unbind tmux's default kill-pane keybinding
+tmux unbind -n x
+tmux unbind x
+
+# Bind x to our popup confirmation script
+tmux bind-key x run-shell "$PLUGIN_DIR/scripts/confirm-close.sh"
