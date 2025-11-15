@@ -2,5 +2,5 @@
 unbind -n x
 unbind x
 
-# Bind x to our popup confirmation script
-bind-key x run-shell "~/.tmux/plugins/tmux-pane-confirm/scripts/confirm-close.sh"
+# Bind x to our popup confirmation script using TPM's plugin dir
+bind-key x run-shell "#{plugin_dir}/scripts/confirm-close.sh"
