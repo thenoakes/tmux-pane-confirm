@@ -4,6 +4,9 @@ set -euo pipefail
 
 TMUX_TARGET="${TMUX_PANE:-}"
 if [ -z "$TMUX_TARGET" ]; then
+  TMUX_TARGET="$(tmux display-message -p '#{pane_id}' 2>/dev/null || true)"
+fi
+if [ -z "$TMUX_TARGET" ]; then
   exit 1
 fi
 
